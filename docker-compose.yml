@@ -1,0 +1,52 @@
+services:
+  # Busca as cotacoes no Yahoo Finance e salva um CSV por moeda no volume
+  gerar_dados:
+    build: ./src/gerar_dados
+    environment:
+      MOEDAS: "USD,EUR"
+      MOEDA_BASE: "BRL"
+      PERIODO: "30d"
+      INTERVALO_DIAS: "7"
+      DATA_DIR: "/data"
+    volumes:
+      - dados:/data
+    networks:
+      - rede
+    restart: unless-stopped
+
+  # Le os CSVs do volume e so expoe POST /prever e GET /metricas, acessivel apenas pela rede interna
+  modelo:
+    build: ./src/modelo
+    environment:
+      PORTA: "5001"
+      DATA_DIR: "/data"
+      MAX_DIAS: "7"
+    volumes:
+      - dados:/data:ro
+    networks:
+      - rede
+    restart: unless-stopped
+
+  # Unico servico exposto ao Cliente; chama o modelo pelo nome do servico na rede
+  backend:
+    build: ./src/backend
+    environment:
+      PORTA: "5000"
+      MODELO_URL: "http://modelo:5001"
+      MODELO_TIMEOUT: "10"
+      DATA_DIR: "/data"
+    volumes:
+      - dados:/data:ro
+    ports:
+      - "5000:5000"
+    networks:
+      - rede
+    depends_on:
+      - modelo
+    restart: unless-stopped
+
+volumes:
+  dados:
+
+networks:
+  rede:
