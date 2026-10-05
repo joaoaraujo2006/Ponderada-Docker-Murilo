@@ -5,30 +5,9 @@ Nome do Aluno: João Pedro Gonçalves Corrêa Araujo
 
 ## Sobre o Projeto
 
-Descrição geral do projeto. Explique qual problema ele resolve, o contexto de desenvolvimento e os principais pontos de destaque da solução.
+Construa e documente uma solução conteinerizada que treine um modelo para estimar o valor futuro de uma moeda, como o Bitcoin, a partir de dados históricos. O treinamento deve ser executado em um container Docker ou em um notebook. Ao final, o modelo treinado deve ser disponibilizado em um segundo container, que executará um backend para carregá-lo e oferecer predições à aplicação.
 
-
-## Tecnologias Utilizadas
-
-- **Linguagem:** [ex: TypeScript / Python / Go]
-- **Framework:** [ex: React / Next.js / FastAPI / Express]
-- **Banco de Dados:** [ex: PostgreSQL / MongoDB / Redis]
-- **Infraestrutura / DevOps:** [ex: Docker / Vercel / AWS]
-
-## Como Executar o Projeto
-
-### Pré-requisitos
-
-Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
-- [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/) (versão X.X.X ou superior) / [Python](https://www.python.org/)
-
-### Passo a Passo
-
-1. **Clonar o repositório:**
-   ```bash
-   git clone https://github.com/seu-usuario/nome-do-repositorio.git
-   ```
+O backend deve ser implementado obrigatoriamente em Python. A escolha das bibliotecas e da abordagem de modelagem é livre. O objetivo não é produzir uma previsão financeira confiável para uso real, mas demonstrar a integração entre treinamento, artefato do modelo, container de inferência e aplicação.
 
 ### Dev Log
 
