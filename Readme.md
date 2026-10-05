@@ -70,6 +70,7 @@ Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
 - Etapa 7 - Próximos Passos
     - Como o tempo é curto, não pude melhorar o modelo como eu gostaria, por isso, defino como próximos passos seguir incrementando e melhorando o modelo preditivo. Utilizando talvez, uma maior janela de tempo e novas features.
     - Outra ponto interessante que eu gostaria de melhorar posteriormente, seria o re-treino do modelo, que ainda não existe na arquitetura atual do sistema. 
+    - Como último passo, anexei o csv na raiz apenas para demonstração do que é gerando pela aba de gerar_dados.
 
 
 
@@ -103,31 +104,3 @@ sequenceDiagram
     Backend-->>Cliente: Resposta final em JSON
 ```
 
-#### Diagrama de Componentes
-
-```mermaid
-flowchart LR
-    Cliente([Cliente])
-    ExtAPI[["Yahoo Finance"]]
-
-    subgraph Docker["Ambiente Docker"]
-        direction LR
-
-        subgraph CBackend["Container Backend"]
-            Backend["Backend API<br/>(Flask)"]
-            Modelo["Modelo ML<br/>(modulo Python, em memoria)"]
-        end
-
-        subgraph CGerar["Container Gerar Dados"]
-            GerarDados["Gerar Dados<br/>(job a cada 7 dias)"]
-        end
-
-        Volume[("Volume Compartilhado<br/>historico_MOEDA.csv")]
-    end
-
-    Cliente -- "HTTP: requisita predicao" --> Backend
-    Backend -- "chamada de funcao: prever()" --> Modelo
-    GerarDados -- "HTTP: busca ultimos 7 dias" --> ExtAPI
-    GerarDados -- "escreve CSV" --> Volume
-    Modelo -- "le CSV" --> Volume
-```
